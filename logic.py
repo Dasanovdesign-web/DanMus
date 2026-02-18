@@ -41,7 +41,7 @@ def get_songs_from_folder(folder_path):
 
 
 
-self.is_playing - False
+
 
 
 

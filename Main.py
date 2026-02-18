@@ -21,7 +21,6 @@ class MusicPlayer(ctk.CTk):
         self.setup_ui()
 
     def setup_ui(self):
-        """Создание интерфейса"""
         self.label = ctk.CTkLabel(self, text="Плеер DanMus готов!", font=("Arial", 20))
         self.label.pack(pady=40)
         
@@ -46,7 +45,6 @@ class MusicPlayer(ctk.CTk):
                 print(f"Трек: {track.title} - {track.artist}")
 
     def toggle_playback(self):
-        """Метод переключения проигрывания"""
         if not self.playlist:
             print("Playlist is empty!") 
             return
@@ -66,7 +64,24 @@ class MusicPlayer(ctk.CTk):
             pygame.mixer.music.pause()
             self.is_playing = False
             self.btn_play.configure(text="Play")
+    
 
+    def play_next(self):
+        if self.playlist:
+            self.current_index = (self.current_index + 1) % len(self.playlist)
+            self.change_track()
+
+    def play_prev(self):
+        if self.playlist:
+            self.current_index = (self.current_index - 1) %  len(self.playlist)
+            self.is_playing = False
+            self.change_track()
+
+    def change_track(self):
+        pygame.mixer.music.stop() 
+        self.is_playing = False ## Сбрасываем флаг, toggle_playback , играть заново
+        self.toggle_playback()
+        
 if __name__ == "__main__":
     app = MusicPlayer(skin_name="classic")
-    app.mainloop()
+    app.mainloop()  
